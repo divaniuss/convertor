@@ -60,9 +60,14 @@ class Converter:
 class ConverterApp:
     def __init__(self, root):
         self.converter = Converter()
+        self.dark_mode = False
 
         root.title("Конвертер")
         root.geometry("400x350")
+
+        self.dark_mode_var = tk.BooleanVar()
+        self.theme_switch = tk.Checkbutton(root, text="Тёмная тема", variable=self.dark_mode_var, command=self.toggle_theme)
+        self.theme_switch.pack()
 
         self.label_category = tk.Label(root, text="Категория:")
         self.label_category.pack()
@@ -154,7 +159,25 @@ class ConverterApp:
             result = "Ошибка: некорректные единицы измерения"
 
         self.result_label.config(text=result)
+    def toggle_theme(self):
+        if self.dark_mode_var.get():
+            bg_color = "#333333"
+            fg_color = "#ffffff"
+            btn_color = "#555555"
+        else:
+            bg_color = "white"
+            fg_color = "black"
+            btn_color = "lightgray"
 
+        root.config(bg=bg_color)
+
+        for widget in [self.label_category, self.label_from, self.label_to, self.label_value, self.result_label]:
+            widget.config(bg=bg_color, fg=fg_color)
+
+        self.button_convert.config(bg=btn_color, fg=fg_color)
+        self.theme_switch.config(bg=bg_color, fg=fg_color, selectcolor=bg_color)
+        self.entry_value.config(bg=btn_color, fg=fg_color, insertbackground=fg_color)
+        self.dark_mode = not self.dark_mode
 
 
 root = tk.Tk()
