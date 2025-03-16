@@ -1,5 +1,5 @@
 class Converter:
-    def init(self):
+    def __init__(self):
         self.units = {
             1: 1000,
             2: 100,
