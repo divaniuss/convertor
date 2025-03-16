@@ -12,6 +12,11 @@ class Converter:
             3: 3600,
             4: 86400
         }
+        self.mass = {
+            1: 1,
+            2: 1000,
+            3: 1000000,
+        }
 
     def convert_distance(self):
         print("1. Миллиметр\n"
@@ -45,21 +50,40 @@ class Converter:
             print("Ошибка: некорректный ввод единиц измерения.")
             return
 
-        result = value / self.time[choice_from] * self.time[choice_into]
+        result = value * self.time[choice_from] / self.time[choice_into]
 
         print(f"Результат: {result}")
+
+    def convert_mass(self):
+        print("1. Грамм\n"
+              "2. Килограмм\n"
+              "3. Тонна\n")
+
+        choice_from = int(input("Введите вашу начальную единицу измерения (1-3): "))
+        choice_into = int(input("Введите вашу конечную единицу измерения (1-3): "))
+        value = float(input("Введите значение для конвертации: "))
+
+        if choice_from not in self.mass or choice_into not in self.mass:
+            print("Ошибка: некорректный ввод единиц измерения.")
+            return
+
+        result = value * (self.mass[choice_from] / self.mass[choice_into])
+        print(f"Результат: {result}")
+
 
 c = Converter()
 
 
 while True:
-    choice = str(input("Вы хотите конвертировать дистанции(1) или время(2): "))
-
+    choice = str(input("Вы хотите конвертировать дистанции(1), время(2), массы(3): "))
     if choice == "1":
         c.convert_distance()
         break
     elif choice == "2":
         c.convert_time()
+        break
+    elif choice == "3":
+        c.convert_mass()
         break
     else:
         print("Введите правильные значения")
